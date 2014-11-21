@@ -1,10 +1,10 @@
-/* Filename: <lees.h>
-* Author:Ryan Bissiri
-* Date:11/18/14
-* Description: Header file for lee's expansion and traceback algorithms
+/* Filename: <lees_3bit.h>
+* Author:Ryan Bissiri/James Robinson
+* Date:11/20/14
+* Description: Header file for lee's expansion 3-bit  and traceback algorithms
 */
-#ifndef _LEES_H_
-#define _LEES_H_
+#ifndef _LEES3_H_
+#define _LEES3_H_
 
 #include "../Headers/unode.h"
 #include "../Headers/edge.h"
@@ -31,7 +31,7 @@ using Utilities::Path;
  Returns: Void
  Runs the Breadth-First Search expansion portion of lee's algorithm
  */
-void lees_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid);
+void lees_3bit_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid);
 /*
 *Inputs: Unode* Source to connect from
          Unode* Sink to connect to
@@ -41,7 +41,6 @@ void lees_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid);
  Returns: Path* containing path from Source to Sink
  Runs the Breadth-First Search expansion portion of lee's algorithm
  */
-Path* traceback(UNode* source, UNode* sink ,vector<vector<UNode*> > &grid, bool intersections);
-
+Path* traceback_3bit(UNode* source, UNode* sink ,vector<vector<UNode*> > &grid, bool intersections);
 
 #endif

@@ -1,0 +1,15 @@
+{
+	"file_name": "outside_bounds",
+
+	"height": 10,
+	"width": 10,
+
+	"blockerList": [
+	
+	],
+
+	"routeList": [
+	
+	{"name": "route1", "source_x": -11, "source_y": 11, "sink_x": -9, "sink_y": 9}
+	]
+}

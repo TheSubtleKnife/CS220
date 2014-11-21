@@ -1,0 +1,16 @@
+{
+	"file_name": "intersection",
+
+	"height": 10,
+	"width": 10,
+
+	"blockerList": [
+	
+	],
+
+	"routeList": [
+	
+	{"name": "route2", "source_x": 0, "source_y": 5, "sink_x":9 , "sink_y": 5},
+    {"name": "route2", "source_x": 5, "source_y": 0, "sink_x": 5, "sink_y": 9}
+	]
+}

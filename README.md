@@ -1,3 +1,12 @@
+## Group Member Names:
+
+Ryan Bissiri and James Robinson
+
+## Instructions:
+
+./grid_router <test JSON file> <intersections y/n> <lees test normal/3bit/2bit>
+
+
 CS220 Project Framework
 ===============
 

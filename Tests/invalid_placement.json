@@ -1,0 +1,15 @@
+{
+	"file_name": "invalid_placement",
+
+	"height": 10,
+	"width": 10,
+
+	"blockerList": [
+	{"name": "blocker1", "width": 8, "height": 8, "x": 1, "y": 1}
+	],
+
+	"routeList": [
+	
+	{"name": "route2", "source_x": 4, "source_y": 4, "sink_x":5 , "sink_y": 5}
+	]
+}

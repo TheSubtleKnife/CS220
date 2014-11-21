@@ -2,6 +2,7 @@
 #include "../Headers/grid.h"
 #include "../Headers/problem_object.h"
 #include "../Headers/lees.h"
+#include "../Headers/lees_3bit.h"
 #include "../Headers/unode.h"
 #include "../Headers/newgrid.h"
 #include <time.h>
@@ -21,8 +22,8 @@ int main(int argc,char* argv[]) {
 	}
 	Utilities::ProblemObject* first_problem = new Utilities::ProblemObject(std::string(argv[1]));
 	// EDIT FROM HERE DOWN
-     if(argc < 3) { 
-		cout << "Usage: ./grid_router <test_file> <intersect y/n>" << endl; 
+     if(argc < 4) { 
+		cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit>" << endl; 
 		exit(1);
 	}
     bool intersect = true;
@@ -33,9 +34,10 @@ int main(int argc,char* argv[]) {
         intersect = true;
         }
     else{
-        cout << "Usage: ./grid_router <test_file> <intersect y/n>" << endl; 
+        cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit>" << endl; 
 		exit(1);
      }
+   
 	//Create your problem map object (in our example, we use a simple grid, you should create your own)
     NewGrid g(*first_problem);
     g.print_graph();
@@ -57,7 +59,20 @@ int main(int argc,char* argv[]) {
 
 	//Note, we create random paths just as an example of how to create paths, netlists are created similarly
 	vector<Path*> paths;
-    paths = g.run_lees(*first_problem,intersect);
+    if(argv[3][0]=='n'){
+        paths = g.run_lees(*first_problem,intersect);
+    }
+    else if(argv[3][0]=='3'){
+        paths = g.run_lees_3bit(*first_problem,intersect);
+    }
+   /* else if(argv[3][0]=='2'){
+        paths = g.run_lees_2bit(*first_problem,intersect);
+    }*/
+    else{
+        cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit>" << endl; 
+		exit(1);
+     }
+        
 	g.print_graph();
 
 	//Print the paths/netlists that you return from your algorithm
@@ -67,6 +82,7 @@ int main(int argc,char* argv[]) {
 		Path* temp = paths.at(i);
 		delete temp;
 	}
+
 
 	paths.clear();
 
