@@ -1,6 +1,9 @@
 
 #include "../Headers/grid.h"
 #include "../Headers/problem_object.h"
+#include "../Headers/lees.h"
+#include "../Headers/unode.h"
+#include "../Headers/newgrid.h"
 #include <time.h>
 #include <cstdlib>
 #include <iostream>
@@ -13,14 +16,29 @@ int main(int argc,char* argv[]) {
 
 	// DO NOT CHANGE THIS SECTION OF CODE
 	if(argc < 2) { 
-		cout << "Usage: ./grid_router <test_file>" << endl; 
+		cout << "Usage: ./grid_router <test_file> " << endl; 
 		exit(1);
 	}
 	Utilities::ProblemObject* first_problem = new Utilities::ProblemObject(std::string(argv[1]));
 	// EDIT FROM HERE DOWN
-
+     if(argc < 3) { 
+		cout << "Usage: ./grid_router <test_file> <intersect y/n>" << endl; 
+		exit(1);
+	}
+    bool intersect = true;
+    if(argv[2][0]=='y'){
+        intersect = false;
+        }
+    else if(argv[2][0]=='n'){
+        intersect = true;
+        }
+    else{
+        cout << "Usage: ./grid_router <test_file> <intersect y/n>" << endl; 
+		exit(1);
+     }
 	//Create your problem map object (in our example, we use a simple grid, you should create your own)
-	Utilities::Grid g(first_problem->get_width(), first_problem->get_height());
+    NewGrid g(*first_problem);
+    g.print_graph();
 
 	/*
 	Note: we do not take into account the connections or blockers that exist in the Project Object
@@ -39,25 +57,8 @@ int main(int argc,char* argv[]) {
 
 	//Note, we create random paths just as an example of how to create paths, netlists are created similarly
 	vector<Path*> paths;
-	srand(time(NULL));
-	int number_paths = first_problem->get_connections().size();
-	cout << "Creating " << number_paths << " paths...";
-	for (int i = 0;i < number_paths;i++) {
-		Path* new_path = new Path();
-		int x = rand() % first_problem->get_width();
-		int y = rand() % first_problem->get_height();
-		int path_length = 1+rand()%10;
-		for (unsigned j = 0;j < path_length;j++) {
-			bool direction = rand()%2;
-			Point head(x,y);
-			direction?x+=1:y+=1;
-			Point tail(x,y);
-			PathSegment* new_segment = new PathSegment(head,tail);
-			new_path->add_segment(new_segment);
-		}
-		paths.push_back(new_path);
-	}
-	cout << "Completed." << endl;
+    paths = g.run_lees(*first_problem,intersect);
+	g.print_graph();
 
 	//Print the paths/netlists that you return from your algorithm
 	for(unsigned i = 0; i < paths.size(); i++) {
