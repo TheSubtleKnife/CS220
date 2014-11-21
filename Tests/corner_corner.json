@@ -1,0 +1,15 @@
+{
+	"file_name": "corner_corner",
+
+	"height": 10,
+	"width": 10,
+
+	"blockerList": [
+	
+	],
+
+	"routeList": [
+	
+	{"name": "route1", "source_x": 0, "source_y": 0, "sink_x": 9, "sink_y": 9}
+	]
+}
