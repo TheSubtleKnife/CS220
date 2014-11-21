@@ -26,6 +26,7 @@ class NewGrid{
          ~NewGrid();
         vector<Path*> run_lees(Utilities::ProblemObject& problem, bool intersection );
         vector<Path*> run_lees_3bit(Utilities::ProblemObject& problem, bool intersection);
+        //vector<Path*> run_lees_3bit(Utilities::ProblemObject& problem, bool intersection);
         void print_graph();
         void reset_costs();
 };

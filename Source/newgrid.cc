@@ -109,7 +109,28 @@ vector<Path*> NewGrid::run_lees_3bit(Utilities::ProblemObject& problem, bool int
         }
     return results;
     }
-    
+/*    
+vector<Path*> NewGrid::run_lees_2bit(Utilities::ProblemObject& problem, bool intersection){
+    vector<Connection> connections =problem.get_connections();
+    vector<Path*> results;
+    for(int i=0; i< connections.size(); ++i){
+        if(connections[i].source.x < 0 || connections[i].source.y < 0||connections[i].sink.x < 0 
+            || connections[i].sink.y < 0 || connections[i].source.x > problem.get_width() 
+            || connections[i].source.y > problem.get_height()|connections[i].sink.x > problem.get_width() 
+            || connections[i].sink.y > problem.get_height()){
+                claim("Source/Sink out of grid bounds", Utilities::kError); //error checking
+        }
+        //calling lee's 2bit BFS
+        lees_2bit_expand(grid.at(connections[i].source.x).at(connections[i].source.y),grid.at(connections[i].sink.x)
+            .at(connections[i].sink.y),grid);
+        print_graph();
+        //3bit traceback
+        results.push_back(traceback_2bit(grid.at(connections[i].source.x).at(connections[i].source.y),grid.at(connections[i].sink.x).at(connections[i].sink.y),grid,intersection));
+        reset_costs();
+        }
+    return results;
+    }
+*/
 /*
  Prints out costs and blockers in the grid
  */   

@@ -65,6 +65,7 @@ int main(int argc,char* argv[]) {
     else if(argv[3][0]=='3'){
         paths = g.run_lees_3bit(*first_problem,intersect);
     }
+    //TODO: ADD 2bit option
    /* else if(argv[3][0]=='2'){
         paths = g.run_lees_2bit(*first_problem,intersect);
     }*/
