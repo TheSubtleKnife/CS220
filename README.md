@@ -4,7 +4,13 @@ Ryan Bissiri and James Robinson
 
 ## Instructions:
 
-./grid_router (test JSON file) (intersections y/n) (lees test normal/3bit/2bit)
+./grid_router (test JSON file) (intersections y/n) (algorithm number)
+
+Algorithm number:
+
+- 1: Lee's algorithm, normal
+- 2: Lee's algorithm, Akers' 2-bit encoding
+- 3: Lee's algorithm, Akers' 3-bit encoding
 
 
 CS220 Project Framework

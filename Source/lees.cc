@@ -211,5 +211,3 @@ Path* traceback(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,bool in
     }
     return new_path;
 }
-
-            
