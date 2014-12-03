@@ -39,8 +39,12 @@ int main(int argc,char* argv[]) {
      }
    
 	//Create your problem map object (in our example, we use a simple grid, you should create your own)
+<<<<<<< HEAD
     NewGrid g(*first_problem);
     g.print_graph();
+=======
+	Utilities::Grid g(first_problem);
+>>>>>>> ec9e1da737d2f1dcf503114b976a6d8ab83c74e6
 
 	/*
 	Note: we do not take into account the connections or blockers that exist in the Project Object
@@ -56,6 +60,7 @@ int main(int argc,char* argv[]) {
 	Path: a series of straight line segments, with a single source and a single sink
 	Netlist: a series of stright line segments, with a single source and more than one sink
 	*/
+<<<<<<< HEAD
 
 	//Note, we create random paths just as an example of how to create paths, netlists are created similarly
 	vector<Path*> paths;
@@ -83,6 +88,9 @@ int main(int argc,char* argv[]) {
      }
         
 	g.print_graph();
+=======
+	vector<Path*> paths = g.test_algorithm();
+>>>>>>> ec9e1da737d2f1dcf503114b976a6d8ab83c74e6
 
 	//Print the paths/netlists that you return from your algorithm
 	for(unsigned i = 0; i < paths.size(); i++) {
