@@ -41,7 +41,7 @@ void lees_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid);
  Returns: Path* containing path from Source to Sink
  Runs the Breadth-First Search expansion portion of lee's algorithm
  */
-Path* traceback(UNode* source, UNode* sink ,vector<vector<UNode*> > &grid, bool intersections);
+Path* traceback(UNode* source, UNode* sink ,vector<vector<UNode*> > &grid, bool intersections,bool minturns);
 
 
 #endif

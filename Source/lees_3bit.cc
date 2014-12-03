@@ -86,7 +86,7 @@ Path* traceback_3bit(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,bo
             claim("There is no valid path, Routing Failed", Utilities::kError);
             }
         //determines if path will become obstacle for next iteration
-        if(!intersections){
+        if(intersections){
             sink->set_obstacle(true);
         }
         //if traced to source, end

@@ -59,8 +59,16 @@ int main(int argc,char* argv[]) {
 
 	//Note, we create random paths just as an example of how to create paths, netlists are created similarly
 	vector<Path*> paths;
+    bool minturn;
     if(argv[3][0]=='n'){
-        paths = g.run_lees(*first_problem,intersect);
+        if(argv[4][0]=='y'){
+             minturn = true;
+         }
+         else{
+            minturn = false;
+            }
+        paths = g.run_lees(*first_problem,intersect,minturn);
+         
     }
     else if(argv[3][0]=='3'){
         paths = g.run_lees_3bit(*first_problem,intersect);

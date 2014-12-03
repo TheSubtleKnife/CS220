@@ -72,16 +72,20 @@ void lees_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid){
          Unode* Sink to connect to
          grid containing all nodes
          bool intersections set the nodes along path as an obstacle or not
+         bool minturns try to minimize turns
  Modifies: vector<vector<UNode*> >& grid
  Returns: Path* containing path from Source to Sink
  Runs the Breadth-First Search expansion portion of lee's algorithm
  */
-Path* traceback(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,bool intersections){
+Path* traceback(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,bool intersections,bool minturns){
     Path* new_path = new Path();
     int count = 0;
     while(1){
+        //last direction taken
+        enum directions {left,right,up,down,any};
+        directions direction;
+        direction = any;
     
-    fflush(stdout);
         if(count>grid.size()*grid.at(0).size()){
             claim("There is no valid path, routing failed", Utilities::kError);
             }
@@ -92,6 +96,61 @@ Path* traceback(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,bool in
         //if traced to source, end
         if(source->get_x()==sink->get_x()&&source->get_y()==sink->get_y())
             break;
+        //check if left neighbour was visited, and costs less 
+        if(minturns){
+            if((sink->get_x()-1)>=0&&grid.at(sink->get_y()).at(sink->get_x()-1)->is_visited()&&
+                grid.at(sink->get_y()).at(sink->get_x()-1)->get_cost()<sink->get_cost()&&direction==left){
+                
+                    Point head(sink->get_x(),sink->get_y());//	
+                    Point tail(grid.at(sink->get_y()).at(sink->get_x()-1)->get_x(),
+                        grid.at(sink->get_y()).at(sink->get_x()-1)->get_y());
+                    PathSegment* new_segment = new PathSegment(head, tail);//traced segment to add to path
+                    new_path->add_segment(new_segment);
+                    sink = grid.at(sink->get_y()).at(sink->get_x()-1);//move to next node along path
+                    goto next;
+                
+            }
+            //check if right neighbour was visited, and costs less
+            else if((sink->get_x()+1)<grid.size()&&grid.at(sink->get_y()).at(sink->get_x()+1)->is_visited()&&
+                grid.at(sink->get_y()).at(sink->get_x()+1)->get_cost()<sink->get_cost()&&direction==right){
+                   
+                    Point head(sink->get_x(),sink->get_y());	
+                    Point tail(grid.at(sink->get_y()).at(sink->get_x()+1)->get_x(),
+                        grid.at(sink->get_y()).at(sink->get_x()+1)->get_y());
+                    PathSegment* new_segment = new PathSegment(head, tail);
+                    new_path->add_segment(new_segment);
+                    sink = grid.at(sink->get_y()).at(sink->get_x()+1);
+                    goto next;
+                
+            }
+            //check if down neighbour was visited, and costs less
+            else if((sink->get_y()+1)<grid.at(0).size()&&grid.at(sink->get_y()+1).at(sink->get_x())->is_visited()&&
+                grid.at(sink->get_y()+1).at(sink->get_x())->get_cost()<sink->get_cost()&&direction==down){
+                   
+                    Point head(sink->get_x(),sink->get_y());	
+                    Point tail(grid.at(sink->get_y()+1).at(sink->get_x())->get_x(),
+                        grid.at(sink->get_y()+1).at(sink->get_x())->get_y());
+                   PathSegment* new_segment = new PathSegment(head, tail);
+                    new_path->add_segment(new_segment);
+                    sink = grid.at(sink->get_y()+1).at(sink->get_x());
+                    goto next;
+                
+            }
+            //check if up neighbour was visited, and costs less
+            else if((sink->get_y()-1)>=0&&grid.at(sink->get_y()-1).at(sink->get_x())->is_visited()&&
+                grid.at(sink->get_y()-1).at(sink->get_x())->get_cost()<sink->get_cost()&&direction==up){
+                
+                    Point head(sink->get_x(),sink->get_y());	
+                    Point tail(grid.at(sink->get_y()-1).at(sink->get_x())->get_x(),
+                        grid.at(sink->get_y()-1).at(sink->get_x())->get_y());
+                    PathSegment* new_segment = new PathSegment(head, tail);
+                    new_path->add_segment(new_segment);
+                    sink = grid.at(sink->get_y()-1).at(sink->get_x());
+                    goto next;
+            }
+        }
+        //if direction needs to change
+        
         //check if left neighbour was visited, and costs less
         if((sink->get_x()-1)>=0&&grid.at(sink->get_y()).at(sink->get_x()-1)->is_visited()&&
             grid.at(sink->get_y()).at(sink->get_x()-1)->get_cost()<sink->get_cost()){
@@ -102,13 +161,10 @@ Path* traceback(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,bool in
                 PathSegment* new_segment = new PathSegment(head, tail);//traced segment to add to path
                 new_path->add_segment(new_segment);
                 sink = grid.at(sink->get_y()).at(sink->get_x()-1);//move to next node along path
+                direction = left;
                 goto next;
             
         }
-
-
-      
-      
         //check if right neighbour was visited, and costs less
         else if((sink->get_x()+1)<grid.size()&&grid.at(sink->get_y()).at(sink->get_x()+1)->is_visited()&&
             grid.at(sink->get_y()).at(sink->get_x()+1)->get_cost()<sink->get_cost()){
@@ -119,6 +175,7 @@ Path* traceback(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,bool in
                 PathSegment* new_segment = new PathSegment(head, tail);
                 new_path->add_segment(new_segment);
                 sink = grid.at(sink->get_y()).at(sink->get_x()+1);
+                direction = right;
                 goto next;
             
         }
@@ -132,6 +189,7 @@ Path* traceback(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,bool in
                PathSegment* new_segment = new PathSegment(head, tail);
                 new_path->add_segment(new_segment);
                 sink = grid.at(sink->get_y()+1).at(sink->get_x());
+                direction = down;
                 goto next;
             
         }
@@ -145,6 +203,7 @@ Path* traceback(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,bool in
                 PathSegment* new_segment = new PathSegment(head, tail);
                 new_path->add_segment(new_segment);
                 sink = grid.at(sink->get_y()-1).at(sink->get_x());
+                direction = up;
                 goto next;
         }
         next:
