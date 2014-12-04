@@ -14,7 +14,7 @@
  Runs the Breadth-First Search expansion portion of lee's algorithm
  */
 using Utilities::claim;
-void lees_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid){
+void lees_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid, bool recentexpand){
     //initial source node
     int cost = 0;
     source->set_cost(cost);
@@ -24,8 +24,16 @@ void lees_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid){
     queue.push_back(source);
     while(!queue.empty())
     {
-        source = queue.front();
-        queue.pop_front();
+        //expand from most recently discovered node
+        if(recentexpand){
+            source = queue.back();
+            queue.pop_back();
+        }
+        //expand all discovered nodes
+        else{
+            source = queue.front();
+            queue.pop_front();
+        }
         //check if left neighbour node is valid/not visited/not obstacle
         if((source->get_x()-1)>=0&&!grid.at(source->get_y()).at(source->get_x()-1)->is_visited()&&
             !grid.at(source->get_y()).at(source->get_x()-1)->is_obstacle()){
@@ -211,3 +219,5 @@ Path* traceback(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,bool in
     }
     return new_path;
 }
+
+            

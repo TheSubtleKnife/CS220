@@ -68,7 +68,7 @@ NewGrid::~NewGrid() {
  Returns: vector<Path*> containing paths if valid routing could be found
  runs lee's normal algorithm
  */
-vector<Path*> NewGrid::run_lees(Utilities::ProblemObject& problem, bool intersection, bool minturns){
+vector<Path*> NewGrid::run_lees(Utilities::ProblemObject& problem, bool intersection, bool minturns, bool recentexpand){
     vector<Connection> connections =problem.get_connections();
     vector<Path*> results;
     for(int i=0; i< connections.size(); ++i){
@@ -80,7 +80,7 @@ vector<Path*> NewGrid::run_lees(Utilities::ProblemObject& problem, bool intersec
         }
         //calling lee's BFS expansion
         lees_expand(grid.at(connections[i].source.x).at(connections[i].source.y),grid.at(connections[i].sink.x)
-            .at(connections[i].sink.y),grid);
+            .at(connections[i].sink.y),grid,recentexpand);
         print_graph();
         //calling lee's traceback
         results.push_back(traceback(grid.at(connections[i].source.x).at(connections[i].source.y),grid.at(connections[i].sink.x).at(connections[i].sink.y),grid,intersection,minturns));

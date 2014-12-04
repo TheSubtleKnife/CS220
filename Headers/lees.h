@@ -31,7 +31,7 @@ using Utilities::Path;
  Returns: Void
  Runs the Breadth-First Search expansion portion of lee's algorithm
  */
-void lees_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid);
+void lees_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid,bool recentexpand);
 /*
 *Inputs: Unode* Source to connect from
          Unode* Sink to connect to
