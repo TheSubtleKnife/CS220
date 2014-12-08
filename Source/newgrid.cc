@@ -8,6 +8,7 @@
 #include "../Headers/path.h"
 #include "../Headers/lees.h"
 #include "../Headers/lees_3bit.h"
+#include "../Headers/lees_2bit.h"
 #include "../Headers/newgrid.h"
 #include "../Headers/problem_object.h"
 #include "../Headers/claim.h"

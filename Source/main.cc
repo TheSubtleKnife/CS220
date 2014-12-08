@@ -2,6 +2,7 @@
 #include "../Headers/grid.h"
 #include "../Headers/problem_object.h"
 #include "../Headers/lees.h"
+#include "../Headers/lees_2bit.h"
 #include "../Headers/lees_3bit.h"
 #include "../Headers/unode.h"
 #include "../Headers/newgrid.h"
@@ -63,7 +64,7 @@ int main(int argc,char* argv[]) {
     NewGrid g(*first_problem);
     bool minturn;
     bool recentexpand;
-    if(argv[3][0]=='n'){
+    if(argv[3][0]=='n' || argv[3][0]=='1'){
         if(argc < 5){
              cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit> <minimize turns y/n>" << endl; 
             exit(1);
@@ -98,10 +99,9 @@ int main(int argc,char* argv[]) {
     else if(argv[3][0]=='3'){
         paths = g.run_lees_3bit(*first_problem,intersect);
     }
-    //TODO: ADD 2bit option
-   /* else if(argv[3][0]=='2'){
-        paths = g.run_lees_2bit(*first_problem,intersect);
-    }*/
+    else if(argv[3][0]=='2'){
+        paths = g.run_lees_3bit(*first_problem,intersect);
+    }
     else{
         cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit>" << endl; 
 		exit(1);
