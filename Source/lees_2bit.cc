@@ -28,7 +28,8 @@ int costTo2Bit(int cost) {
 void lees_2bit_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid){
     //initial source node
     int cost = 0;
-    source->set_cost(cost);
+    source->set_cost(1); //expansion starts with "0 0 1 1", so source
+							//should be 1 to continue this pattern
     source->set_visit(true);
     //BFS queue. Switching back and forth between these for each cost
     list<UNode*> queue0;
@@ -134,8 +135,8 @@ void lees_2bit_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid)
 Path* traceback_2bit(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,bool intersections){
     Path* new_path = new Path();
     int count = 0;
+    int cost = sink->get_cost(); //# of spaces from source to that point
     while(1){
-   
         if(count>grid.size()*grid.at(0).size()){
             claim("There is no valid path, Routing Failed", Utilities::kError);
             }
@@ -148,50 +149,54 @@ Path* traceback_2bit(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,bo
             break;
         //check if left neighbour was visited, and costs less
          if((sink->get_x()-1)>=0&&grid.at(sink->get_y()).at(sink->get_x()-1)->is_visited()&&
-            (grid.at(sink->get_y()).at(sink->get_x()-1)->get_cost()+1)%3 == (sink->get_cost())%3) {
+            (grid.at(sink->get_y()).at(sink->get_x()-1)->get_cost()) == costTo2Bit(cost-1)) {
                 Point head(sink->get_x(),sink->get_y());//	
                 Point tail(grid.at(sink->get_y()).at(sink->get_x()-1)->get_x(),
                     grid.at(sink->get_y()).at(sink->get_x()-1)->get_y());
                 PathSegment* new_segment = new PathSegment(head, tail);//traced segment to add to path
                 new_path->add_segment(new_segment);
                 sink = grid.at(sink->get_y()).at(sink->get_x()-1);//move to next node along path
+                cost--;
                 goto next;
 
         }
         //check if right neighbour was visited, and costs less
         else if((sink->get_x()+1)<grid.size()&&grid.at(sink->get_y()).at(sink->get_x()+1)->is_visited()&&
-            (grid.at(sink->get_y()).at(sink->get_x()+1)->get_cost()+1)%3 == sink->get_cost()%3){
-               Point head(sink->get_x(),sink->get_y());	
+            (grid.at(sink->get_y()).at(sink->get_x()+1)->get_cost()) == costTo2Bit(cost-1)){
+                Point head(sink->get_x(),sink->get_y());	
                 Point tail(grid.at(sink->get_y()).at(sink->get_x()+1)->get_x(),
                     grid.at(sink->get_y()).at(sink->get_x()+1)->get_y());
                 PathSegment* new_segment = new PathSegment(head, tail);
                 new_path->add_segment(new_segment);
                 sink = grid.at(sink->get_y()).at(sink->get_x()+1);
+                cost--;
                 goto next;
 
         }
         //check if down neighbour was visited, and costs less
         else if((sink->get_y()+1)<grid.at(0).size()&&grid.at(sink->get_y()+1).at(sink->get_x())->is_visited()&&
-            (grid.at(sink->get_y()+1).at(sink->get_x())->get_cost()+1)%3 == sink->get_cost()%3){
-               Point head(sink->get_x(),sink->get_y());	
+            (grid.at(sink->get_y()+1).at(sink->get_x())->get_cost()) == costTo2Bit(cost-1)){
+                Point head(sink->get_x(),sink->get_y());	
                 Point tail(grid.at(sink->get_y()+1).at(sink->get_x())->get_x(),
                     grid.at(sink->get_y()+1).at(sink->get_x())->get_y());
-               PathSegment* new_segment = new PathSegment(head, tail);
+                PathSegment* new_segment = new PathSegment(head, tail);
                 new_path->add_segment(new_segment);
                 sink = grid.at(sink->get_y()+1).at(sink->get_x());
+                cost--;
                 goto next;
 
         }
         //check if up neighbour was visited, and costs less
        //check if up neighbour was visited, and costs less
         else if((sink->get_y()-1)>=0&&grid.at(sink->get_y()-1).at(sink->get_x())->is_visited()&&
-            (grid.at(sink->get_y()-1).at(sink->get_x())->get_cost()+1)%3 == sink->get_cost()%3){
+            (grid.at(sink->get_y()-1).at(sink->get_x())->get_cost()) == costTo2Bit(cost-1)){
                 Point head(sink->get_x(),sink->get_y());	
                 Point tail(grid.at(sink->get_y()-1).at(sink->get_x())->get_x(),
                     grid.at(sink->get_y()-1).at(sink->get_x())->get_y());
                 PathSegment* new_segment = new PathSegment(head, tail);
                 new_path->add_segment(new_segment);
                 sink = grid.at(sink->get_y()-1).at(sink->get_x());
+                cost--;
                 goto next;
         }
         next:
