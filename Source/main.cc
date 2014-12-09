@@ -100,7 +100,7 @@ int main(int argc,char* argv[]) {
         paths = g.run_lees_3bit(*first_problem,intersect);
     }
     else if(argv[3][0]=='2'){
-        paths = g.run_lees_3bit(*first_problem,intersect);
+        paths = g.run_lees_2bit(*first_problem,intersect);
     }
     else{
         cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit>" << endl; 

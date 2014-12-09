@@ -110,7 +110,7 @@ vector<Path*> NewGrid::run_lees_3bit(Utilities::ProblemObject& problem, bool int
         }
     return results;
     }
-/*    
+    
 vector<Path*> NewGrid::run_lees_2bit(Utilities::ProblemObject& problem, bool intersection){
     vector<Connection> connections =problem.get_connections();
     vector<Path*> results;
@@ -131,7 +131,7 @@ vector<Path*> NewGrid::run_lees_2bit(Utilities::ProblemObject& problem, bool int
         }
     return results;
     }
-*/
+
 /*
  Prints out costs and blockers in the grid
  */   
