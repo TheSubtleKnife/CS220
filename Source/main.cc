@@ -4,6 +4,7 @@
 #include "../Headers/lees.h"
 #include "../Headers/lees_2bit.h"
 #include "../Headers/lees_3bit.h"
+#include "../Headers/lees_rubins.h"
 #include "../Headers/unode.h"
 #include "../Headers/newgrid.h"
 #include "../Headers/hadlocks.h"
@@ -103,9 +104,9 @@ int main(int argc,char* argv[]) {
     else if(argv[3][0]=='3'){
         paths = g.run_lees_3bit(*first_problem,intersect);
     }
-   // else if(argv[3][0]=='4' || argv[3][0]=='r'){
-      //  paths = g.run_lees_rubins(*first_problem,intersect);
-   // }
+    else if(argv[3][0]=='4' || argv[3][0]=='r'){
+        paths = g.run_lees_rubins(*first_problem,intersect);
+    }
     else if(argv[3][0]=='h'){
         paths = g.run_hadlocks(*first_problem,intersect,false);
     }

@@ -14,11 +14,13 @@
 #include <iostream>
 #include <iomanip>
 #include <list>
+#include <cmath>        // std::abs
 
 using std::cerr;
 using std::cout;
 using std::endl;
 using std::list;
+using std::abs;
 using Utilities::Edge;
 using Utilities::Node;
 using Utilities::UNode;

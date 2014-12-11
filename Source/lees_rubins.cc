@@ -7,6 +7,13 @@
 */
 #include "../Headers/lees_rubins.h"
 #include "../Headers/claim.h"
+using Utilities::claim;
+/* documentation goes here
+ */
+int manhattan_distance(UNode* node1, UNode* node2) {
+	return abs(node1->get_x() - node2->get_x()) + abs(node1->get_y() - node2->get_y());
+}
+
 /*
 *Inputs: Unode* Source to expand from
          Unode* Sink to find
@@ -15,55 +22,67 @@
  Returns: Void
  Runs the Breadth-First Search expansion portion of lee's algorithm
  */
- using Utilities::claim;
 void lees_rubins_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid){
     //initial source node
     int cost = 0;
     source->set_cost(cost);
     source->set_visit(true);
-    //BFS queue
-    list<UNode*> queue;
-    queue.push_back(source);
-    while(!queue.empty())
+    source->set_rubins_cost(manhattan_distance(source, sink));
+    //BFS priority queue
+    int max_priority = grid.size() * grid.at(0).size(); //theoretical worst case rubin's cost of a  
+    list<UNode*> queue[max_priority]; //priority queue
+    int current_priority = source->get_rubins_cost(); //we'll never expand to a cell with a lower Rubin's cost than its predecessor
+    queue[current_priority].push_back(source);
+    while(true)
     {
-        source = queue.front();
-        queue.pop_front();
+        while (current_priority < max_priority && queue[current_priority].empty()) {
+			current_priority++;
+		}
+        if (current_priority >= max_priority) {
+			break;
+		}
+        source = queue[current_priority].front();
+        queue[current_priority].pop_front();
         //check if left neighbour node is valid/not visited/not obstacle
       if((source->get_x()-1)>=0&&!grid.at(source->get_y()).at(source->get_x()-1)->is_visited()&&
             !grid.at(source->get_y()).at(source->get_x()-1)->is_obstacle()){
-                grid.at(source->get_y()).at(source->get_x()-1)->set_cost((source->get_cost()%3)+1); //increment cost MOD 3
+                grid.at(source->get_y()).at(source->get_x()-1)->set_cost((source->get_cost())+1); //increment cost 
                 grid.at(source->get_y()).at(source->get_x()-1)->set_visit(true);//
                 if(grid.at(source->get_y()).at(source->get_x()-1)==sink)//if sink node found, end search
                     break;
-                queue.push_back(grid.at(source->get_y()).at(source->get_x()-1));//add discovered new node to BFS queue
+                int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()).at(source->get_x()-1),sink);
+                queue[neighbor_priority].push_back(grid.at(source->get_y()).at(source->get_x()-1));//add discovered new node to BFS queue
         }
         //check if right neighbour node is valid/not visited/not obstacle
         if((source->get_x()+1)<grid.size()&&!grid.at(source->get_y()).at(source->get_x()+1)->is_visited()&&
             !grid.at(source->get_y()).at(source->get_x()+1)->is_obstacle()){
-                grid.at(source->get_y()).at(source->get_x()+1)->set_cost((source->get_cost()%3)+1); //increment cost MOD 3
+                grid.at(source->get_y()).at(source->get_x()+1)->set_cost((source->get_cost())+1); //increment cost 
                 grid.at(source->get_y()).at(source->get_x()+1)->set_visit(true);
                 if(grid.at(source->get_y()).at(source->get_x()+1)==sink)
                     break;
-                queue.push_back(grid.at(source->get_y()).at(source->get_x()+1));
+                int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()).at(source->get_x()+1),sink);
+                queue[neighbor_priority].push_back(grid.at(source->get_y()).at(source->get_x()+1));
         }
         //check if up neighbour node is valid/not visited/not obstacle
         if((source->get_y()-1)>=0&&!grid.at(source->get_y()-1).at(source->get_x())->is_visited()&&
             !grid.at(source->get_y()-1).at(source->get_x())->is_obstacle()){
-                grid.at(source->get_y()-1).at(source->get_x())->set_cost((source->get_cost()%3)+1); //increment cost MOD 3
+                grid.at(source->get_y()-1).at(source->get_x())->set_cost((source->get_cost())+1); //increment cost 
                 grid.at(source->get_y()-1).at(source->get_x())->set_visit(true);
                 if(grid.at(source->get_y()-1).at(source->get_x())==sink)
                     break;
-                queue.push_back(grid.at(source->get_y()-1).at(source->get_x()));
+                int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()-1).at(source->get_x()),sink);
+                queue[neighbor_priority].push_back(grid.at(source->get_y()-1).at(source->get_x()));
             
         }
         //check if down neighbour node is valid/not visited/not obstacle
         if((source->get_y()+1)<grid.at(0).size()&&!grid.at(source->get_y()+1).at(source->get_x())->is_visited()&&
             !grid.at(source->get_y()+1).at(source->get_x())->is_obstacle()){
-            grid.at(source->get_y()+1).at(source->get_x())->set_cost((source->get_cost()%3)+1); //increment cost MOD 3
+            grid.at(source->get_y()+1).at(source->get_x())->set_cost((source->get_cost())+1); //increment cost 
             grid.at(source->get_y()+1).at(source->get_x())->set_visit(true);
             if(grid.at(source->get_y()+1).at(source->get_x())==sink)
                 break;
-            queue.push_back(grid.at(source->get_y()+1).at(source->get_x()));
+                int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()+1).at(source->get_x()),sink);
+            queue[neighbor_priority].push_back(grid.at(source->get_y()+1).at(source->get_x()));
 
         }
 
@@ -95,7 +114,7 @@ Path* traceback_rubins(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,
             break;
         //check if left neighbour was visited, and costs less
          if((sink->get_x()-1)>=0&&grid.at(sink->get_y()).at(sink->get_x()-1)->is_visited()&&
-            (grid.at(sink->get_y()).at(sink->get_x()-1)->get_cost()+1)%3 == (sink->get_cost())%3) {
+            (grid.at(sink->get_y()).at(sink->get_x()-1)->get_cost()+1) == (sink->get_cost())) {
                 Point head(sink->get_x(),sink->get_y());//	
                 Point tail(grid.at(sink->get_y()).at(sink->get_x()-1)->get_x(),
                     grid.at(sink->get_y()).at(sink->get_x()-1)->get_y());
@@ -106,8 +125,8 @@ Path* traceback_rubins(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,
 
         }
         //check if right neighbour was visited, and costs less
-        else if((sink->get_x()+1)<grid.size()&&grid.at(sink->get_y()).at(sink->get_x()+1)->is_visited()&&
-            (grid.at(sink->get_y()).at(sink->get_x()+1)->get_cost()+1)%3 == sink->get_cost()%3){
+        else if((sink->get_x()+1)<grid.at(0).size()&&grid.at(sink->get_y()).at(sink->get_x()+1)->is_visited()&&
+            (grid.at(sink->get_y()).at(sink->get_x()+1)->get_cost()+1) == sink->get_cost()){
                Point head(sink->get_x(),sink->get_y());	
                 Point tail(grid.at(sink->get_y()).at(sink->get_x()+1)->get_x(),
                     grid.at(sink->get_y()).at(sink->get_x()+1)->get_y());
@@ -118,8 +137,8 @@ Path* traceback_rubins(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,
 
         }
         //check if down neighbour was visited, and costs less
-        else if((sink->get_y()+1)<grid.at(0).size()&&grid.at(sink->get_y()+1).at(sink->get_x())->is_visited()&&
-            (grid.at(sink->get_y()+1).at(sink->get_x())->get_cost()+1)%3 == sink->get_cost()%3){
+        else if((sink->get_y()+1)<grid.size()&&grid.at(sink->get_y()+1).at(sink->get_x())->is_visited()&&
+            (grid.at(sink->get_y()+1).at(sink->get_x())->get_cost()+1) == sink->get_cost()){
                Point head(sink->get_x(),sink->get_y());	
                 Point tail(grid.at(sink->get_y()+1).at(sink->get_x())->get_x(),
                     grid.at(sink->get_y()+1).at(sink->get_x())->get_y());
@@ -132,7 +151,7 @@ Path* traceback_rubins(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,
         //check if up neighbour was visited, and costs less
        //check if up neighbour was visited, and costs less
         else if((sink->get_y()-1)>=0&&grid.at(sink->get_y()-1).at(sink->get_x())->is_visited()&&
-            (grid.at(sink->get_y()-1).at(sink->get_x())->get_cost()+1)%3 == sink->get_cost()%3){
+            (grid.at(sink->get_y()-1).at(sink->get_x())->get_cost()+1) == sink->get_cost()){
                 Point head(sink->get_x(),sink->get_y());	
                 Point tail(grid.at(sink->get_y()-1).at(sink->get_x())->get_x(),
                     grid.at(sink->get_y()-1).at(sink->get_x())->get_y());

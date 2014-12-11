@@ -14,6 +14,7 @@ namespace Utilities{
             bool obstacle;
             bool visited;
             int detour;
+            int rubins_cost;
         public:
             //constructors
             UNode(int x, int y, int cost=0);
@@ -22,10 +23,12 @@ namespace Utilities{
             bool is_visited();
             bool is_obstacle();
             int get_detour();
+            int get_rubins_cost();
             //mutators
             void set_visit(bool visit);
             void set_obstacle(bool obstacle);
             void set_detour(int detour);
+			void set_rubins_cost(int rubin_cost);
     };
 }	
 #endif 
