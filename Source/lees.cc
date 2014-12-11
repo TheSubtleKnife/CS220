@@ -44,7 +44,7 @@ void lees_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid, bool
                 queue.push_back(grid.at(source->get_y()).at(source->get_x()-1));//add discovered new node to BFS queue
         }
         //check if right neighbour node is valid/not visited/not obstacle
-        if((source->get_x()+1)<grid.size()&&!grid.at(source->get_y()).at(source->get_x()+1)->is_visited()&&
+        if((source->get_x()+1)<grid.at(0).size()&&!grid.at(source->get_y()).at(source->get_x()+1)->is_visited()&&
             !grid.at(source->get_y()).at(source->get_x()+1)->is_obstacle()){
                 grid.at(source->get_y()).at(source->get_x()+1)->set_cost(source->get_cost()+1);
                 grid.at(source->get_y()).at(source->get_x()+1)->set_visit(true);
@@ -63,7 +63,7 @@ void lees_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid, bool
             
         }
         //check if down neighbour node is valid/not visited/not obstacle
-        if((source->get_y()+1)<grid.at(0).size()&&!grid.at(source->get_y()+1).at(source->get_x())->is_visited()&&
+        if((source->get_y()+1)<grid.size()&&!grid.at(source->get_y()+1).at(source->get_x())->is_visited()&&
             !grid.at(source->get_y()+1).at(source->get_x())->is_obstacle()){
             grid.at(source->get_y()+1).at(source->get_x())->set_cost(source->get_cost()+1);
             grid.at(source->get_y()+1).at(source->get_x())->set_visit(true);
