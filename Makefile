@@ -5,13 +5,13 @@ OBJ=claim.o edge.o grid.o netlist.o node.o path.o pathsegment.o problem_object.o
 vpath %.cc Source/
 
 all: $(OBJ) main.cc
-	g++ -g -O0 -o grid_router $^ Utilities/JSON_parser/json_parser.so 
+	g++ -g -o grid_router $^ Utilities/JSON_parser/json_parser.so 
 
 test: all
 	./grid_router Tests/test_sample.json
 	
 %.o: %.cc
-	g++ -O0 -c $^
+	g++ -c $^
 
 cleanup:
 	rm -f *.o
