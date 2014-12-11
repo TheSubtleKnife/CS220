@@ -4,6 +4,7 @@
 #include "../Headers/lees.h"
 #include "../Headers/lees_2bit.h"
 #include "../Headers/lees_3bit.h"
+#include "../Headers/lees_rubins.h"
 #include "../Headers/unode.h"
 #include "../Headers/newgrid.h"
 #include <time.h>
@@ -24,7 +25,7 @@ int main(int argc,char* argv[]) {
 	Utilities::ProblemObject* first_problem = new Utilities::ProblemObject(std::string(argv[1]));
 	// EDIT FROM HERE DOWN
      if(argc < 4) { 
-		cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit>" << endl; 
+		cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit/3bit/2bit/rubins>" << endl; 
 		exit(1);
 	}
     bool intersect = true;
@@ -35,7 +36,7 @@ int main(int argc,char* argv[]) {
         intersect = true;
         }
     else{
-        cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit>" << endl; 
+        cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit/rubins>" << endl; 
 		exit(1);
      }
    
@@ -66,7 +67,7 @@ int main(int argc,char* argv[]) {
     bool recentexpand;
     if(argv[3][0]=='n' || argv[3][0]=='1'){
         if(argc < 5){
-             cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit> <minimize turns y/n>" << endl; 
+             cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit/rubins> <minimize turns y/n>" << endl; 
             exit(1);
         }
         if(argv[4][0]=='y'){
@@ -76,11 +77,11 @@ int main(int argc,char* argv[]) {
             minturn = false;
          }
          else{
-            cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit> <minimize turns y/n>" << endl; 
+            cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit/rubins> <minimize turns y/n>" << endl; 
             exit(1);
         }
         if(argc < 6){
-             cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit> <minimize turns y/n> <optimize expansion y/n>" << endl; 
+             cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit/rubins> <minimize turns y/n> <optimize expansion y/n>" << endl; 
             exit(1);
         }
         if(argv[5][0]=='y'){
@@ -90,20 +91,23 @@ int main(int argc,char* argv[]) {
             recentexpand = false;
          }
          else{
-            cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit> <minimize turns y/n> <optimize expansion y/n>" << endl; 
+            cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit/rubins> <minimize turns y/n> <optimize expansion y/n>" << endl; 
             exit(1);
         } 
         paths = g.run_lees(*first_problem,intersect,minturn,recentexpand);
          
     }
-    else if(argv[3][0]=='3'){
-        paths = g.run_lees_3bit(*first_problem,intersect);
-    }
     else if(argv[3][0]=='2'){
         paths = g.run_lees_2bit(*first_problem,intersect);
     }
+    else if(argv[3][0]=='3'){
+        paths = g.run_lees_3bit(*first_problem,intersect);
+    }
+    else if(argv[3][0]=='4' || argv[3][0]=='r'){
+        paths = g.run_lees_rubins(*first_problem,intersect);
+    }
     else{
-        cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit>" << endl; 
+        cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit/rubins>" << endl; 
 		exit(1);
      }
         

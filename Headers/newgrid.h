@@ -12,6 +12,7 @@
 #include "../Headers/lees.h"
 #include "../Headers/lees_2bit.h"
 #include "../Headers/lees_3bit.h"
+#include "../Headers/lees_rubins.h"
 #include "../Headers/problem_object.h"
 #include <time.h>
 #include <cstdlib>
@@ -29,6 +30,7 @@ class NewGrid{
         vector<Path*> run_lees(Utilities::ProblemObject& problem, bool intersection, bool minturns, bool recentexpand );
         vector<Path*> run_lees_3bit(Utilities::ProblemObject& problem, bool intersection);
         vector<Path*> run_lees_2bit(Utilities::ProblemObject& problem, bool intersection);
+        vector<Path*> run_lees_rubins(Utilities::ProblemObject& problem, bool intersection);
         void print_graph();
         void reset_costs();
 };
