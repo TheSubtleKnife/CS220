@@ -1,17 +1,17 @@
 
 SRC=$(filter-out %main.cc, Source/*)
-OBJ=claim.o edge.o grid.o netlist.o node.o path.o pathsegment.o problem_object.o segmentgroup.o newgrid.o lees.o unode.o lees_3bit.o lees_2bit.o
+OBJ=claim.o edge.o grid.o netlist.o node.o path.o pathsegment.o problem_object.o segmentgroup.o newgrid.o lees.o unode.o lees_3bit.o lees_2bit.o hadlocks.o
 
 vpath %.cc Source/
 
 all: $(OBJ) main.cc
-	g++ -g -o grid_router $^ Utilities/JSON_parser/json_parser.so 
+	g++ -g -O0 -o grid_router $^ Utilities/JSON_parser/json_parser.so 
 
 test: all
 	./grid_router Tests/test_sample.json
 	
 %.o: %.cc
-	g++ -c $^
+	g++ -O0 -c $^
 
 cleanup:
 	rm -f *.o

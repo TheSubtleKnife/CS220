@@ -6,6 +6,7 @@
 #include "../Headers/lees_3bit.h"
 #include "../Headers/unode.h"
 #include "../Headers/newgrid.h"
+#include "../Headers/hadlocks.h"
 #include <time.h>
 #include <cstdlib>
 #include <iostream>
@@ -102,8 +103,11 @@ int main(int argc,char* argv[]) {
     else if(argv[3][0]=='2'){
         paths = g.run_lees_2bit(*first_problem,intersect);
     }
+    else if(argv[3][0]=='h'){
+        paths = g.run_hadlocks(*first_problem,intersect,false);
+    }
     else{
-        cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit>" << endl; 
+        cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit/hadlocks>" << endl; 
 		exit(1);
      }
         

@@ -5,7 +5,7 @@
 	"width": 10,
 
 	"blockerList": [
-	{"name": "blocker1", "width": 1, "height": 8, "x": 1, "y": 1}
+	{"name": "blocker1", "width": 2, "height": 8, "x": 1, "y": 1}
 	],
 
 	"routeList": [

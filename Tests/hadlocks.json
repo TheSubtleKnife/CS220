@@ -1,0 +1,17 @@
+{
+	"file_name": "hadlocks",
+
+	"height": 12,
+	"width": 9,
+
+	"blockerList": [
+	{"name": "blocker1", "width": 1, "height": 6, "x": 5, "y": 1},
+    {"name": "blocker2", "width": 5, "height": 1, "x": 3, "y": 6},
+    {"name": "blocker3", "width": 2, "height": 5, "x": 6, "y": 7}
+	],
+
+	"routeList": [
+	
+    {"name": "route1", "source_x": 3, "source_y": 7, "sink_x": 7, "sink_y": 2}
+	]
+}

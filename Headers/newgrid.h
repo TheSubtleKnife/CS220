@@ -29,7 +29,9 @@ class NewGrid{
         vector<Path*> run_lees(Utilities::ProblemObject& problem, bool intersection, bool minturns, bool recentexpand );
         vector<Path*> run_lees_3bit(Utilities::ProblemObject& problem, bool intersection);
         vector<Path*> run_lees_2bit(Utilities::ProblemObject& problem, bool intersection);
+        vector<Path*> run_hadlocks(Utilities::ProblemObject& problem, bool intersection,bool minturns);
         void print_graph();
+        void print_hadlocks();
         void reset_costs();
 };
 #endif
