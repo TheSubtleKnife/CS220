@@ -1,7 +1,7 @@
 /* Filename: <hadlocks.h>
 * Author:Ryan Bissiri
 * Date:11/18/14
-* Description: Header file for lee's expansion and traceback algorithms
+* Description: Header file for hadlocks's expansion and traceback algorithms
 */
 #ifndef _HADLOCKS_H_
 #define _HADLOCKS_H_
@@ -30,7 +30,7 @@ using Utilities::Path;
          grid containing all nodes
  Modifies: vector<vector<UNode*> >& grid
  Returns: Void
- Runs the Breadth-First Search expansion portion of lee's algorithm
+ Runs the Breadth-First Search expansion portion of hadlock's algorithm
  */
 void hadlocks_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid);
 /*
@@ -40,8 +40,15 @@ void hadlocks_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid);
          bool intersections set the nodes along path as an obstacle or not
  Modifies: vector<vector<UNode*> >& grid
  Returns: Path* containing path from Source to Sink
- Runs the Breadth-First Search expansion portion of lee's algorithm
+ Runs the Breadth-First Search expansion portion of hadlocks's algorithm
  */
 Path* hadlocks_traceback(UNode* source, UNode* sink ,vector<vector<UNode*> >&grid, bool intersections,bool minturns);
+/*
+*Inputs: Unode* Source to connect from
+         Unode* Sink to connect to
+ Modifies: none
+ Returns: int containing manhattan distance from sink to source
+ Calculates the manhattan distance between two nodes
+ */
 int man_dist(UNode* source, UNode* sink);
 #endif
