@@ -27,7 +27,7 @@ int main(int argc,char* argv[]) {
 	Utilities::ProblemObject* first_problem = new Utilities::ProblemObject(std::string(argv[1]));
 	// EDIT FROM HERE DOWN
      if(argc < 4) { 
-		cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit/3bit/2bit/rubins>" << endl; 
+		cout << "Usage: ./grid_router <test_file> <intersect y/n> <lee's type normal/3bit/2bit/rubins/korns/hadlocks>" << endl; 
 		exit(1);
 	}
     bool intersect = true;

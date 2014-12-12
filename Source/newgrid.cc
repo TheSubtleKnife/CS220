@@ -148,10 +148,10 @@ vector<Path*> NewGrid::run_lees_rubins(Utilities::ProblemObject& problem, bool i
         //calling lee's rubin's
         lees_rubins_expand(grid.at(connections[i].source.x).at(connections[i].source.y),grid.at(connections[i].sink.x)
             .at(connections[i].sink.y),grid);
-        cout << "Lee's cost grid:" << endl;
-        print_graph();
         cout << "Rubin's cost grid:" <<endl;
         print_rubins();
+        cout << "Path length from source:" << endl;
+        print_graph();
         //traceback
         results.push_back(traceback_rubins(grid.at(connections[i].source.x).at(connections[i].source.y),grid.at(connections[i].sink.x).at(connections[i].sink.y),grid,intersection));
         reset_costs();
@@ -169,15 +169,15 @@ vector<Path*> NewGrid::run_lees_korns(Utilities::ProblemObject& problem, bool in
             || connections[i].sink.y >= problem.get_height()){
                 claim("Source/Sink out of grid bounds", Utilities::kError); //error checking
         }
-        //calling lee's rubin's
-        lees_rubins_expand(grid.at(connections[i].source.x).at(connections[i].source.y),grid.at(connections[i].sink.x)
+        //calling lee's korn's
+        lees_korns_expand(grid.at(connections[i].source.x).at(connections[i].source.y),grid.at(connections[i].sink.x)
             .at(connections[i].sink.y),grid);
-        cout << "Lee's cost grid:" << endl;
-        print_graph();
         cout << "Korn's cost grid:" <<endl;
         print_korns();
+        cout << "Path length from source:" << endl;
+        print_graph();
         //traceback
-        results.push_back(traceback_rubins(grid.at(connections[i].source.x).at(connections[i].source.y),grid.at(connections[i].sink.x).at(connections[i].sink.y),grid,intersection));
+        results.push_back(traceback_korns(grid.at(connections[i].source.x).at(connections[i].source.y),grid.at(connections[i].sink.x).at(connections[i].sink.y),grid,intersection));
         reset_costs();
         }
     return results;
@@ -251,8 +251,9 @@ void NewGrid::print_korns(){
 				cout<< "***** ";
 				continue;
 			}
-			cout << std::setfill('0') << std::setw(5) << grid.at(i).at(j)->get_korns_cost()<< " ";
+			//cout << std::setfill('0') << std::setw(5) << grid.at(i).at(j)->get_korns_cost()<< " ";
 			//cout <<  grid.at(i).at(j)->get_korns_cost()<< " ";
+			printf("%5.2f ", grid.at(i).at(j)->get_korns_cost());
 		}
 	    cout <<endl;
 	}

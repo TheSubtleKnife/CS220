@@ -30,11 +30,12 @@ class CompareKorns{
  Runs the Breadth-First Search expansion portion of lee's algorithm
  */
 void lees_korns_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid){
+    float A = 1.5; //Must be >=1. If A=1, you're just doing Rubin's
     //initial source node
     int cost = 0;
     source->set_cost(cost);
     source->set_visit(true);
-    source->set_korns_cost(manhattan_distance(source, sink));
+    source->set_korns_cost(A*manhattan_distance(source, sink));
     //BFS priority queue
     std::priority_queue<UNode*,vector<UNode*>, CompareKorns> queue;
     queue.push(source);
@@ -47,7 +48,7 @@ void lees_korns_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid
             !grid.at(source->get_y()).at(source->get_x()-1)->is_obstacle()){
                 grid.at(source->get_y()).at(source->get_x()-1)->set_cost((source->get_cost())+1); //increment cost 
                 grid.at(source->get_y()).at(source->get_x()-1)->set_visit(true);
-                int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()).at(source->get_x()-1),sink);
+                float neighbor_priority = (source->get_cost()) + 1 + A*manhattan_distance(grid.at(source->get_y()).at(source->get_x()-1),sink);
                 grid.at(source->get_y()).at(source->get_x()-1)->set_korns_cost(neighbor_priority);
                 if(grid.at(source->get_y()).at(source->get_x()-1)==sink) {//if sink node found, end search
                     break;
@@ -59,7 +60,7 @@ void lees_korns_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid
             !grid.at(source->get_y()).at(source->get_x()+1)->is_obstacle()){
                 grid.at(source->get_y()).at(source->get_x()+1)->set_cost((source->get_cost())+1); //increment cost 
                 grid.at(source->get_y()).at(source->get_x()+1)->set_visit(true);
-                int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()).at(source->get_x()+1),sink);
+                float neighbor_priority = (source->get_cost()) + 1 + A*manhattan_distance(grid.at(source->get_y()).at(source->get_x()+1),sink);
                 grid.at(source->get_y()).at(source->get_x()+1)->set_korns_cost(neighbor_priority);
                 if(grid.at(source->get_y()).at(source->get_x()+1)==sink) {
                     break;
@@ -71,7 +72,7 @@ void lees_korns_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid
             !grid.at(source->get_y()-1).at(source->get_x())->is_obstacle()){
                 grid.at(source->get_y()-1).at(source->get_x())->set_cost((source->get_cost())+1); //increment cost 
                 grid.at(source->get_y()-1).at(source->get_x())->set_visit(true);
-                int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()-1).at(source->get_x()),sink);
+                float neighbor_priority = (source->get_cost()) + 1 + A*manhattan_distance(grid.at(source->get_y()-1).at(source->get_x()),sink);
                 grid.at(source->get_y()-1).at(source->get_x())->set_korns_cost(neighbor_priority);
                 if(grid.at(source->get_y()-1).at(source->get_x())==sink) {
                     break;
@@ -84,7 +85,7 @@ void lees_korns_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid
             !grid.at(source->get_y()+1).at(source->get_x())->is_obstacle()){
 				grid.at(source->get_y()+1).at(source->get_x())->set_cost((source->get_cost())+1); //increment cost 
 				grid.at(source->get_y()+1).at(source->get_x())->set_visit(true);
-				int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()+1).at(source->get_x()),sink);
+				float neighbor_priority = (source->get_cost()) + 1 + A*manhattan_distance(grid.at(source->get_y()+1).at(source->get_x()),sink);
 				grid.at(source->get_y()+1).at(source->get_x())->set_korns_cost(neighbor_priority);
 				if(grid.at(source->get_y()+1).at(source->get_x())==sink) {
 					break;
