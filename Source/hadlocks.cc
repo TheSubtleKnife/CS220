@@ -36,7 +36,7 @@ void hadlocks_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid){
     int cost = 0;
     source->set_cost(cost);
     source->set_visit(true);
-    int init_detour = man_dist(source, sink);
+    int init_detour = manhattan_distance(source, sink);
     //priority queue ussed in order to visit lower detour nodes first
     std::priority_queue<UNode*,vector<UNode*>, CompareNode> queue;
     queue.push(source);
@@ -50,15 +50,15 @@ void hadlocks_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid){
             !grid.at(source->get_y()).at(source->get_x()-1)->is_obstacle()){
                 grid.at(source->get_y()).at(source->get_x()-1)->set_cost(source->get_cost()+1); //increment cost
                 //if node is a detour, add 1 to detour number
-                if(man_dist(source,sink)<man_dist(grid.at(source->get_y()).at(source->get_x()-1),sink)){
+                if(manhattan_distance(source,sink)<manhattan_distance(grid.at(source->get_y()).at(source->get_x()-1),sink)){
               
                     grid.at(source->get_y()).at(source->get_x()-1)->set_detour(grid.at(source->get_y())
-                        .at(source->get_x())->get_detour() +1);
+						.at(source->get_x())->get_detour() +1);
                 }
-                //if not a detour, update node with the same detour number
+                 //if not a detour, update node with the same detour number
                 else{
                      grid.at(source->get_y()).at(source->get_x()-1)->set_detour(grid.at(source->get_y())
-                        .at(source->get_x())->get_detour());
+						.at(source->get_x())->get_detour());
                 }
                 grid.at(source->get_y()).at(source->get_x()-1)->set_visit(true);//
                 if(grid.at(source->get_y()).at(source->get_x()-1)==sink)//if sink node found, end search
@@ -69,14 +69,14 @@ void hadlocks_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid){
         if((source->get_x()+1)<grid.at(0).size()&&!grid.at(source->get_y()).at(source->get_x()+1)->is_visited()&&
             !grid.at(source->get_y()).at(source->get_x()+1)->is_obstacle()){
                 grid.at(source->get_y()).at(source->get_x()+1)->set_cost(source->get_cost()+1);
-                if(man_dist(source,sink)<man_dist(grid.at(source->get_y()).at(source->get_x()+1),sink)){
+                if(manhattan_distance(source,sink)<manhattan_distance(grid.at(source->get_y()).at(source->get_x()+1),sink)){
                    
                     grid.at(source->get_y()).at(source->get_x()+1)->set_detour(grid.at(source->get_y())
-                        .at(source->get_x())->get_detour() +1);
+						.at(source->get_x())->get_detour() +1);
                 }
                  else{
-                     grid.at(source->get_y()).at(source->get_x()+1)->set_detour(grid.at(source->get_y())'
-                        .at(source->get_x())->get_detour());
+                     grid.at(source->get_y()).at(source->get_x()+1)->set_detour(grid.at(source->get_y())
+						.at(source->get_x())->get_detour());
                 }
                 grid.at(source->get_y()).at(source->get_x()+1)->set_visit(true);
                 if(grid.at(source->get_y()).at(source->get_x()+1)==sink)
@@ -87,14 +87,14 @@ void hadlocks_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid){
         if((source->get_y()-1)>=0&&!grid.at(source->get_y()-1).at(source->get_x())->is_visited()&&
             !grid.at(source->get_y()-1).at(source->get_x())->is_obstacle()){
                 grid.at(source->get_y()-1).at(source->get_x())->set_cost(source->get_cost()+1);
-                if(man_dist(source,sink)<man_dist(grid.at(source->get_y()-1).at(source->get_x()),sink)){
+                if(manhattan_distance(source,sink)<manhattan_distance(grid.at(source->get_y()-1).at(source->get_x()),sink)){
                    
                     grid.at(source->get_y()-1).at(source->get_x())->set_detour(grid.at(source->get_y())
-                        .at(source->get_x())->get_detour() +1);
+						.at(source->get_x())->get_detour() +1);
                 }
                  else{
                      grid.at(source->get_y()-1).at(source->get_x())->set_detour(grid.at(source->get_y())
-                        .at(source->get_x())->get_detour());
+						.at(source->get_x())->get_detour());
                 }
                 grid.at(source->get_y()-1).at(source->get_x())->set_visit(true);
                 if(grid.at(source->get_y()-1).at(source->get_x())==sink)
@@ -106,14 +106,14 @@ void hadlocks_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid){
         if((source->get_y()+1)<grid.size()&&!grid.at(source->get_y()+1).at(source->get_x())->is_visited()&&
             !grid.at(source->get_y()+1).at(source->get_x())->is_obstacle()){
             grid.at(source->get_y()+1).at(source->get_x())->set_cost(source->get_cost()+1);
-            if(man_dist(source,sink)<man_dist(grid.at(source->get_y()+1).at(source->get_x()),sink)){
+            if(manhattan_distance(source,sink)<manhattan_distance(grid.at(source->get_y()+1).at(source->get_x()),sink)){
 
                     grid.at(source->get_y()+1).at(source->get_x())->set_detour(grid.at(source->get_y())
-                        .at(source->get_x())->get_detour() +1);
+						.at(source->get_x())->get_detour() +1);
                 }
              else{
                      grid.at(source->get_y()+1).at(source->get_x())->set_detour(grid.at(source->get_y())
-                        .at(source->get_x())->get_detour());
+						.at(source->get_x())->get_detour());
                 }
             grid.at(source->get_y()+1).at(source->get_x())->set_visit(true);
             if(grid.at(source->get_y()+1).at(source->get_x())==sink)
@@ -268,7 +268,3 @@ Path* hadlocks_traceback(UNode* source, UNode* sink,vector<vector<UNode*> > &gri
     return new_path;
 }
 
-int man_dist(UNode* source, UNode* sink){
-    return(abs(source->get_x()-sink->get_x())+abs(source->get_y()-sink->get_y()));
-}
-            

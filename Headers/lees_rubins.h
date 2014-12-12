@@ -9,19 +9,18 @@
 #include "../Headers/unode.h"
 #include "../Headers/edge.h"
 #include "../Headers/path.h"
+#include "../Headers/manhattan_distance.h"
 #include <time.h>
 #include <cstdlib>
 #include <iostream>
 #include <iomanip>
 #include <list>
-#include <cmath>        // std::abs
 #include <queue>
 
 using std::cerr;
 using std::cout;
 using std::endl;
 using std::list;
-using std::abs;
 using Utilities::Edge;
 using Utilities::Node;
 using Utilities::UNode;
@@ -45,6 +44,6 @@ void lees_rubins_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& gri
  Runs the Breadth-First Search expansion portion of lee's algorithm
  */
 Path* traceback_rubins(UNode* source, UNode* sink ,vector<vector<UNode*> > &grid, bool intersections);
-int manhattan_distance(UNode* node1, UNode* node2);
+
 
 #endif

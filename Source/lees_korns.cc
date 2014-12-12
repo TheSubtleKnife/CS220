@@ -1,18 +1,18 @@
 
-/* Filename: <lees_rubins.cc>
+/* Filename: <lees_korns.cc>
 * Author:Ryan Bissiri/James Robinson
 * Date:11/20/14
 * Description: Implementation for lee's expansion and traceback algorithms
-* 	(using Rubin's cost optimization)
+* 	(using Korn's cost optimization)
 */
-#include "../Headers/lees_rubins.h"
+#include "../Headers/lees_korns.h"
 #include "../Headers/claim.h"
 using Utilities::claim;
 
-class CompareRubins{
+class CompareKorns{
     public:
         bool operator()(UNode* x, UNode* y){
-            if(x->get_rubins_cost() >= y->get_rubins_cost()) {
+            if(x->get_korns_cost() >= y->get_korns_cost()) {
                 return true;
             }
             else {
@@ -29,14 +29,14 @@ class CompareRubins{
  Returns: Void
  Runs the Breadth-First Search expansion portion of lee's algorithm
  */
-void lees_rubins_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid){
+void lees_korns_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid){
     //initial source node
     int cost = 0;
     source->set_cost(cost);
     source->set_visit(true);
-    source->set_rubins_cost(manhattan_distance(source, sink));
+    source->set_korns_cost(manhattan_distance(source, sink));
     //BFS priority queue
-    std::priority_queue<UNode*,vector<UNode*>, CompareRubins> queue;
+    std::priority_queue<UNode*,vector<UNode*>, CompareKorns> queue;
     queue.push(source);
     while(!queue.empty())
     {
@@ -48,7 +48,7 @@ void lees_rubins_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& gri
                 grid.at(source->get_y()).at(source->get_x()-1)->set_cost((source->get_cost())+1); //increment cost 
                 grid.at(source->get_y()).at(source->get_x()-1)->set_visit(true);
                 int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()).at(source->get_x()-1),sink);
-                grid.at(source->get_y()).at(source->get_x()-1)->set_rubins_cost(neighbor_priority);
+                grid.at(source->get_y()).at(source->get_x()-1)->set_korns_cost(neighbor_priority);
                 if(grid.at(source->get_y()).at(source->get_x()-1)==sink) {//if sink node found, end search
                     break;
 				}
@@ -60,7 +60,7 @@ void lees_rubins_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& gri
                 grid.at(source->get_y()).at(source->get_x()+1)->set_cost((source->get_cost())+1); //increment cost 
                 grid.at(source->get_y()).at(source->get_x()+1)->set_visit(true);
                 int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()).at(source->get_x()+1),sink);
-                grid.at(source->get_y()).at(source->get_x()+1)->set_rubins_cost(neighbor_priority);
+                grid.at(source->get_y()).at(source->get_x()+1)->set_korns_cost(neighbor_priority);
                 if(grid.at(source->get_y()).at(source->get_x()+1)==sink) {
                     break;
 				}
@@ -72,7 +72,7 @@ void lees_rubins_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& gri
                 grid.at(source->get_y()-1).at(source->get_x())->set_cost((source->get_cost())+1); //increment cost 
                 grid.at(source->get_y()-1).at(source->get_x())->set_visit(true);
                 int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()-1).at(source->get_x()),sink);
-                grid.at(source->get_y()-1).at(source->get_x())->set_rubins_cost(neighbor_priority);
+                grid.at(source->get_y()-1).at(source->get_x())->set_korns_cost(neighbor_priority);
                 if(grid.at(source->get_y()-1).at(source->get_x())==sink) {
                     break;
 				}
@@ -85,7 +85,7 @@ void lees_rubins_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& gri
 				grid.at(source->get_y()+1).at(source->get_x())->set_cost((source->get_cost())+1); //increment cost 
 				grid.at(source->get_y()+1).at(source->get_x())->set_visit(true);
 				int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()+1).at(source->get_x()),sink);
-				grid.at(source->get_y()+1).at(source->get_x())->set_rubins_cost(neighbor_priority);
+				grid.at(source->get_y()+1).at(source->get_x())->set_korns_cost(neighbor_priority);
 				if(grid.at(source->get_y()+1).at(source->get_x())==sink) {
 					break;
 				}
@@ -104,7 +104,7 @@ void lees_rubins_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& gri
  Returns: Path* containing path from Source to Sink
  Runs the Breadth-First Search expansion portion of lee's algorithm
  */
-Path* traceback_rubins(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,bool intersections){
+Path* traceback_korns(UNode* source, UNode* sink,vector<vector<UNode*> > &grid,bool intersections){
     Path* new_path = new Path();
     int count = 0;
     while(1){
