@@ -4,13 +4,23 @@ Ryan Bissiri and James Robinson
 
 ## Instructions:
 
-./grid_router (test JSON file) (intersections y/n) (algorithm number)
+Usage: ./grid_router <test_file> <algorithm> ...
+Algorithms: 
+    n <y/n intersect> <y/n minimize turns> <y/n optimize expansion>
+                    Normal Lee's algorithm
+    2               Lee's algorithm with 2-bit encoding
+    3               Lee's algorithm with 3-bit encoding
+    r               Lee's algorithm with Rubin's improvements
+    k               Lee's algorithm with Korn's improvements
+    h               Hadlock's algorithm
 
-Algorithm number:
+Examples:
+./grid_router ./Tests/test_sample.json n n y n
+    Use normal Lee's algorithm, no intersections, minimize terms,
+    do not optimize expansion
+./grid_router ./Tests/hadlocks.json h
+    Run Hadlock's algorithm
 
-- 1: Lee's algorithm, normal
-- 2: Lee's algorithm, Akers' 2-bit encoding
-- 3: Lee's algorithm, Akers' 3-bit encoding
 
 
 CS220 Project Framework
