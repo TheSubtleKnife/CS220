@@ -46,7 +46,6 @@ void lees_rubins_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& gri
     while(!queue.empty())
     {
         source = queue.top();
-        cout << "Examining " << source->get_x() << ", " << source->get_y() << " cost " << source->get_cost() << " rubins cost " << source->get_rubins_cost() << endl;
         queue.pop();
         //check if left neighbour node is valid/not visited/not obstacle
         if((source->get_x()-1)>=0&&!grid.at(source->get_y()).at(source->get_x()-1)->is_visited()&&
@@ -55,7 +54,6 @@ void lees_rubins_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& gri
                 grid.at(source->get_y()).at(source->get_x()-1)->set_visit(true);
                 int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()).at(source->get_x()-1),sink);
                 grid.at(source->get_y()).at(source->get_x()-1)->set_rubins_cost(neighbor_priority);
-                cout << "Left: " << neighbor_priority << " " << grid.at(source->get_y()).at(source->get_x()-1)->get_rubins_cost() << endl;
                 if(grid.at(source->get_y()).at(source->get_x()-1)==sink) {//if sink node found, end search
                     break;
 				}
@@ -68,7 +66,6 @@ void lees_rubins_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& gri
                 grid.at(source->get_y()).at(source->get_x()+1)->set_visit(true);
                 int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()).at(source->get_x()+1),sink);
                 grid.at(source->get_y()).at(source->get_x()+1)->set_rubins_cost(neighbor_priority);
-                cout << "Right: " << neighbor_priority << " " << grid.at(source->get_y()).at(source->get_x()-1)->get_rubins_cost() << endl;
                 if(grid.at(source->get_y()).at(source->get_x()+1)==sink) {
                     break;
 				}
@@ -81,7 +78,6 @@ void lees_rubins_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& gri
                 grid.at(source->get_y()-1).at(source->get_x())->set_visit(true);
                 int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()-1).at(source->get_x()),sink);
                 grid.at(source->get_y()-1).at(source->get_x())->set_rubins_cost(neighbor_priority);
-                cout << "Up: " << neighbor_priority << " " << grid.at(source->get_y()).at(source->get_x()-1)->get_rubins_cost() << endl;
                 if(grid.at(source->get_y()-1).at(source->get_x())==sink) {
                     break;
 				}
@@ -95,7 +91,6 @@ void lees_rubins_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& gri
 				grid.at(source->get_y()+1).at(source->get_x())->set_visit(true);
 				int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()+1).at(source->get_x()),sink);
 				grid.at(source->get_y()+1).at(source->get_x())->set_rubins_cost(neighbor_priority);
-                cout << "Down: " << neighbor_priority << " " << grid.at(source->get_y()).at(source->get_x()-1)->get_rubins_cost() << endl;
 				if(grid.at(source->get_y()+1).at(source->get_x())==sink) {
 					break;
 				}
