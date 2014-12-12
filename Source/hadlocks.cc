@@ -5,14 +5,7 @@
 */
 #include "../Headers/hadlocks.h"
 #include "../Headers/claim.h"
-/*
-*Inputs: Unode* Source to expand from
-         Unode* Sink to find
-         grid containing all nodes
- Modifies: vector<vector<UNode*> >& grid
- Returns: Void
- Runs the Breadth-First Search expansion portion of lee's algorithm
- */
+
 using Utilities::claim;
 
 class CompareNode{
@@ -27,6 +20,15 @@ class CompareNode{
         }
 };
 
+/*
+*Inputs: Unode* Source to expand from
+         Unode* Sink to find
+         grid containing all nodes
+ Modifies: vector<vector<UNode*> >& grid
+ Returns: Void
+ Runs the Breadth-First Search expansion portion of lee's algorithm
+ */
+ 
 void hadlocks_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& grid){
     //initial source node
     int cost = 0;

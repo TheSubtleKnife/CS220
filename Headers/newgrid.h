@@ -34,6 +34,7 @@ class NewGrid{
         vector<Path*> run_lees_rubins(Utilities::ProblemObject& problem, bool intersection);
         void print_graph();
         void print_hadlocks();
+        void print_rubins();
         void reset_costs();
 };
 #endif

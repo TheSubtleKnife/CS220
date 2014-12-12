@@ -15,6 +15,7 @@
 #include <iomanip>
 #include <list>
 #include <cmath>        // std::abs
+#include <queue>
 
 using std::cerr;
 using std::cout;
@@ -44,5 +45,6 @@ void lees_rubins_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& gri
  Runs the Breadth-First Search expansion portion of lee's algorithm
  */
 Path* traceback_rubins(UNode* source, UNode* sink ,vector<vector<UNode*> > &grid, bool intersections);
+int manhattan_distance(UNode* node1, UNode* node2);
 
 #endif

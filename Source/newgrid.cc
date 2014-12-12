@@ -147,7 +147,10 @@ vector<Path*> NewGrid::run_lees_rubins(Utilities::ProblemObject& problem, bool i
         //calling lee's rubin's
         lees_rubins_expand(grid.at(connections[i].source.x).at(connections[i].source.y),grid.at(connections[i].sink.x)
             .at(connections[i].sink.y),grid);
+        cout << "Lee's cost grid:" << endl;
         print_graph();
+        cout << "Rubin's cost grid:" <<endl;
+        print_rubins();
         //traceback
         results.push_back(traceback_rubins(grid.at(connections[i].source.x).at(connections[i].source.y),grid.at(connections[i].sink.x).at(connections[i].sink.y),grid,intersection));
         reset_costs();
@@ -198,6 +201,19 @@ void NewGrid::print_hadlocks(){
 				continue;
 			}
 			cout << std::setfill('0') << std::setw(2) << grid.at(i).at(j)->get_detour()<< " ";
+		}
+	    cout <<endl;
+	}
+    cout <<endl;
+}
+void NewGrid::print_rubins(){
+    for(int i=0; i<grid.size(); ++i){
+		for(int j = 0; j<grid.at(0).size(); ++j){
+			if(grid.at(i).at(j)->is_obstacle()){
+				cout<< "** ";
+				continue;
+			}
+			cout << std::setfill('0') << std::setw(2) << grid.at(i).at(j)->get_rubins_cost()<< " ";
 		}
 	    cout <<endl;
 	}
