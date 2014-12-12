@@ -2,24 +2,24 @@
 
 Ryan Bissiri and James Robinson
 
-## Instructions:
+## Instructions:  
 
-Usage: ./grid_router <test_file> <algorithm> ...
-Algorithms: 
-    n <y/n intersect> <y/n minimize turns> <y/n optimize expansion>
-                    Normal Lee's algorithm
-    2               Lee's algorithm with 2-bit encoding
-    3               Lee's algorithm with 3-bit encoding
-    r               Lee's algorithm with Rubin's improvements
-    k               Lee's algorithm with Korn's improvements
-    h               Hadlock's algorithm
+Usage: ./grid_router <test_file> <algorithm> ...  
+Algorithms:  
+    n <y/n intersect> <y/n minimize turns> <y/n optimize expansion>  
+                    Normal Lee's algorithm  
+    2               Lee's algorithm with 2-bit encoding  
+    3               Lee's algorithm with 3-bit encoding  
+    r               Lee's algorithm with Rubin's improvements  
+    k               Lee's algorithm with Korn's improvements  
+    h               Hadlock's algorithm  
 
-Examples:
-./grid_router ./Tests/test_sample.json n n y n
-    Use normal Lee's algorithm, no intersections, minimize terms,
-    do not optimize expansion
-./grid_router ./Tests/hadlocks.json h
-    Run Hadlock's algorithm
+Examples:  
+./grid_router ./Tests/test_sample.json n n y n  
+    Use normal Lee's algorithm, no intersections, minimize terms,  
+    do not optimize expansion  
+./grid_router ./Tests/hadlocks.json h  
+    Run Hadlock's algorithm  
 
 
 
