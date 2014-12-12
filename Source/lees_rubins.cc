@@ -14,6 +14,18 @@ int manhattan_distance(UNode* node1, UNode* node2) {
 	return abs(node1->get_x() - node2->get_x()) + abs(node1->get_y() - node2->get_y());
 }
 
+class CompareRubins{
+    public:
+        bool operator()(UNode* x, UNode* y){
+            if(x->get_rubins_cost() >= y->get_rubins_cost()) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+};
+
 /*
 *Inputs: Unode* Source to expand from
          Unode* Sink to find
@@ -29,60 +41,60 @@ void lees_rubins_expand(UNode* source, UNode* sink, vector<vector<UNode*> >& gri
     source->set_visit(true);
     source->set_rubins_cost(manhattan_distance(source, sink));
     //BFS priority queue
-    int max_priority = grid.size() * grid.at(0).size(); //theoretical worst case rubin's cost of a  
-    list<UNode*> queue[max_priority]; //priority queue
-    int current_priority = source->get_rubins_cost(); //we'll never expand to a cell with a lower Rubin's cost than its predecessor
-    queue[current_priority].push_back(source);
-    while(true)
+    std::priority_queue<UNode*,vector<UNode*>, CompareRubins> queue;
+    queue.push(source);
+    while(!queue.empty())
     {
-        while (current_priority < max_priority && queue[current_priority].empty()) {
-			current_priority++;
-		}
-        if (current_priority >= max_priority) {
-			break;
-		}
-        source = queue[current_priority].front();
-        queue[current_priority].pop_front();
+        source = queue.top();
+        queue.pop();
         //check if left neighbour node is valid/not visited/not obstacle
-      if((source->get_x()-1)>=0&&!grid.at(source->get_y()).at(source->get_x()-1)->is_visited()&&
+        if((source->get_x()-1)>=0&&!grid.at(source->get_y()).at(source->get_x()-1)->is_visited()&&
             !grid.at(source->get_y()).at(source->get_x()-1)->is_obstacle()){
                 grid.at(source->get_y()).at(source->get_x()-1)->set_cost((source->get_cost())+1); //increment cost 
-                grid.at(source->get_y()).at(source->get_x()-1)->set_visit(true);//
-                if(grid.at(source->get_y()).at(source->get_x()-1)==sink)//if sink node found, end search
-                    break;
+                grid.at(source->get_y()).at(source->get_x()-1)->set_visit(true);
                 int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()).at(source->get_x()-1),sink);
-                queue[neighbor_priority].push_back(grid.at(source->get_y()).at(source->get_x()-1));//add discovered new node to BFS queue
+                grid.at(source->get_y()).at(source->get_x()-1)->set_rubins_cost(neighbor_priority);
+                if(grid.at(source->get_y()).at(source->get_x()-1)==sink) {//if sink node found, end search
+                    break;
+				}
+                queue.push(grid.at(source->get_y()).at(source->get_x()-1));//add discovered new node to priority queue
         }
         //check if right neighbour node is valid/not visited/not obstacle
         if((source->get_x()+1)<grid.at(0).size()&&!grid.at(source->get_y()).at(source->get_x()+1)->is_visited()&&
             !grid.at(source->get_y()).at(source->get_x()+1)->is_obstacle()){
                 grid.at(source->get_y()).at(source->get_x()+1)->set_cost((source->get_cost())+1); //increment cost 
                 grid.at(source->get_y()).at(source->get_x()+1)->set_visit(true);
-                if(grid.at(source->get_y()).at(source->get_x()+1)==sink)
-                    break;
                 int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()).at(source->get_x()+1),sink);
-                queue[neighbor_priority].push_back(grid.at(source->get_y()).at(source->get_x()+1));
+                grid.at(source->get_y()).at(source->get_x()+1)->set_rubins_cost(neighbor_priority);
+                if(grid.at(source->get_y()).at(source->get_x()+1)==sink) {
+                    break;
+				}
+                queue.push(grid.at(source->get_y()).at(source->get_x()+1));
         }
         //check if up neighbour node is valid/not visited/not obstacle
         if((source->get_y()-1)>=0&&!grid.at(source->get_y()-1).at(source->get_x())->is_visited()&&
             !grid.at(source->get_y()-1).at(source->get_x())->is_obstacle()){
                 grid.at(source->get_y()-1).at(source->get_x())->set_cost((source->get_cost())+1); //increment cost 
                 grid.at(source->get_y()-1).at(source->get_x())->set_visit(true);
-                if(grid.at(source->get_y()-1).at(source->get_x())==sink)
-                    break;
                 int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()-1).at(source->get_x()),sink);
-                queue[neighbor_priority].push_back(grid.at(source->get_y()-1).at(source->get_x()));
+                grid.at(source->get_y()-1).at(source->get_x())->set_rubins_cost(neighbor_priority);
+                if(grid.at(source->get_y()-1).at(source->get_x())==sink) {
+                    break;
+				}
+                queue.push(grid.at(source->get_y()-1).at(source->get_x()));
             
         }
         //check if down neighbour node is valid/not visited/not obstacle
         if((source->get_y()+1)<grid.size()&&!grid.at(source->get_y()+1).at(source->get_x())->is_visited()&&
             !grid.at(source->get_y()+1).at(source->get_x())->is_obstacle()){
-            grid.at(source->get_y()+1).at(source->get_x())->set_cost((source->get_cost())+1); //increment cost 
-            grid.at(source->get_y()+1).at(source->get_x())->set_visit(true);
-            if(grid.at(source->get_y()+1).at(source->get_x())==sink)
-                break;
-                int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()+1).at(source->get_x()),sink);
-            queue[neighbor_priority].push_back(grid.at(source->get_y()+1).at(source->get_x()));
+				grid.at(source->get_y()+1).at(source->get_x())->set_cost((source->get_cost())+1); //increment cost 
+				grid.at(source->get_y()+1).at(source->get_x())->set_visit(true);
+				int neighbor_priority = (source->get_cost()) + 1 + manhattan_distance(grid.at(source->get_y()+1).at(source->get_x()),sink);
+				grid.at(source->get_y()+1).at(source->get_x())->set_rubins_cost(neighbor_priority);
+				if(grid.at(source->get_y()+1).at(source->get_x())==sink) {
+					break;
+				}
+				queue.push(grid.at(source->get_y()+1).at(source->get_x()));
 
         }
 
